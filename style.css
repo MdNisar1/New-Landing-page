@@ -81,3 +81,32 @@ footer {
   .hero { grid-template-columns: 1fr; text-align: center; }
   .features { grid-template-columns: 1fr; }
 }
+
+.hero.small {
+  min-height: 40vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.contact-form {
+  max-width: 600px;
+  margin: 40px auto;
+}
+
+.contact-form form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.contact-form input,
+.contact-form textarea {
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+}
+
+.contact-form button {
+  width: fit-content;
+}
