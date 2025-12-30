@@ -110,3 +110,44 @@ footer {
 .contact-form button {
   width: fit-content;
 }
+
+
+/* Header */
+.header {
+  text-align: center;
+  padding: 40px 20px;
+  background: #4f46e5;
+  color: white;
+}
+
+.header h1 {
+  margin-bottom: 10px;
+}
+
+/* Features grid */
+.features-container {
+  max-width: 1100px;
+  margin: 40px auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 25px;
+  padding: 0 20px;
+}
+
+.feature-card {
+  background: white;
+  padding: 20px;
+  border-radius: 14px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+
+.feature-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+}
+
+.feature-card h3 {
+  margin-bottom: 8px;
+  color: #4f46e5;
+}
