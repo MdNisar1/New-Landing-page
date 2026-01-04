@@ -163,74 +163,103 @@ footer {
 }
 
 .pricing {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 20px;
-  padding: 30px;
   max-width: 1000px;
-  margin: auto;
+  margin: 60px auto;
+  padding: 0 20px;
+  font-family: Poppins, Arial, sans-serif;
+}
+
+.pricing-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.pricing-header h1 {
+  font-size: 2rem;
+  margin-bottom: 8px;
+}
+
+.pricing-grid {
+  display: grid;
+  gap: 24px;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
 }
 
 .card {
   background: #fff;
-  border-radius: 14px;
-  padding: 25px;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.07);
-  position: relative;
-  text-align: center;
+  border-radius: 18px;
+  padding: 24px;
+  border: 1px solid #eee;
+  transition: transform .25s ease, box-shadow .25s ease;
 }
 
-.card h2 {
-  margin-bottom: 10px;
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 18px 40px rgba(0,0,0,.06);
 }
 
-.price {
-  font-size: 2rem;
-  margin: 10px 0 15px;
-}
-
-.price span {
-  font-size: 0.9rem;
-  color: #666;
-}
-
-ul {
-  list-style: none;
-  margin: 15px 0 20px;
-}
-
-ul li {
-  margin: 8px 0;
-}
-
-button {
-  border: none;
-  padding: 10px 18px;
-  border-radius: 8px;
-  cursor: pointer;
-  background: #4f46e5;
-  color: white;
-  font-weight: bold;
-}
-
-button:hover {
-  opacity: 0.9;
-}
-
-.popular {
+.card.popular {
   border: 2px solid #4f46e5;
+  position: relative;
 }
 
 .badge {
   position: absolute;
-  top: -10px;
-  right: 15px;
+  top: -12px;
+  right: 16px;
   background: #4f46e5;
-  color: white;
+  color: #fff;
+  font-size: 12px;
   padding: 4px 10px;
   border-radius: 20px;
-  font-size: 0.75rem;
 }
+
+.price {
+  font-size: 28px;
+  font-weight: 700;
+  margin: 10px 0 18px;
+}
+
+.price span {
+  font-size: 14px;
+  color: #666;
+}
+
+.features {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 22px;
+}
+
+.features li {
+  margin: 8px 0;
+  color: #333;
+}
+
+.btn {
+  width: 100%;
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  background: #f8f8f8;
+  cursor: pointer;
+  transition: .25s;
+}
+
+.btn:hover {
+  background: #eee;
+}
+
+.btn.primary {
+  background: #4f46e5;
+  color: #fff;
+  border-color: #4f46e5;
+}
+
+.btn.primary:hover {
+  opacity: .9;
+}
+
 
 .footer {
   text-align: center;
