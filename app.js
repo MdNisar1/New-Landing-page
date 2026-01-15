@@ -1,55 +1,117 @@
-// MOBILE MENU
-const menuBtn = document.querySelector(".menu-btn");
-const menu = document.querySelector(".menu");
+/* ======================
+   HELPER FUNCTION
+====================== */
+const $ = (selector, scope = document) => scope.querySelector(selector);
+const $$ = (selector, scope = document) => scope.querySelectorAll(selector);
 
-menuBtn.addEventListener("click", () => {
-  menu.classList.toggle("open");
-  menuBtn.textContent = menu.classList.contains("open") ? "✕" : "☰";
-});
+/* ======================
+   MOBILE MENU
+====================== */
+const menuBtn = $(".menu-btn");
+const menu = $(".menu");
 
-// DARK MODE
-const themeBtn = document.querySelector(".theme-toggle");
-themeBtn.addEventListener("click", () => {
-  document.body.classList.toggle("dark");
-  themeBtn.textContent = document.body.classList.contains("dark") ? "☀️" : "🌙";
-});
+if (menuBtn && menu) {
+  menuBtn.addEventListener("click", () => {
+    const isOpen = menu.classList.toggle("open");
+    menuBtn.textContent = isOpen ? "✕" : "☰";
+    menuBtn.setAttribute("aria-expanded", isOpen);
+  });
+}
 
-// SMOOTH SCROLL
-document.querySelectorAll(".menu a").forEach(link => {
+/* ======================
+   DARK MODE (with localStorage)
+====================== */
+const themeBtn = $(".theme-toggle");
+
+// load saved theme
+if (localStorage.getItem("theme") === "dark") {
+  document.body.classList.add("dark");
+  themeBtn.textContent = "☀️";
+}
+
+if (themeBtn) {
+  themeBtn.addEventListener("click", () => {
+    const isDark = document.body.classList.toggle("dark");
+    themeBtn.textContent = isDark ? "☀️" : "🌙";
+    localStorage.setItem("theme", isDark ? "dark" : "light");
+  });
+}
+
+/* ======================
+   SMOOTH SCROLL
+====================== */
+$$(".menu a").forEach(link => {
   link.addEventListener("click", e => {
+    const targetId = link.getAttribute("href");
+    if (!targetId.startsWith("#")) return;
+
+    const target = $(targetId);
+    if (!target) return;
+
     e.preventDefault();
-    document.querySelector(link.getAttribute("href")).scrollIntoView({ behavior: "smooth" });
-    menu.classList.remove("open");
-    menuBtn.textContent = "☰";
+    target.scrollIntoView({ behavior: "smooth" });
+
+    menu?.classList.remove("open");
+    menuBtn && (menuBtn.textContent = "☰");
   });
 });
 
-// SCROLL ANIMATIONS
-const fades = document.querySelectorAll(".fade");
-const io = new IntersectionObserver(entries => {
-  entries.forEach(e => e.isIntersecting && e.target.classList.add("show"));
-});
-fades.forEach(el => io.observe(el));
+/* ======================
+   SCROLL ANIMATIONS
+====================== */
+const fades = $$(".fade");
 
-// CONTACT FORM
-const form = document.querySelector("#contactForm");
-const statusText = document.querySelector(".form-status");
+if ("IntersectionObserver" in window) {
+  const observer = new IntersectionObserver(
+    entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("show");
+          observer.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.2 }
+  );
 
-form.addEventListener("submit", e => {
-  e.preventDefault();
-  statusText.textContent = "Sending...";
-  setTimeout(() => {
-    statusText.textContent = "Message sent successfully 🎉";
-    statusText.classList.add("success");
-    form.reset();
-  }, 1200);
-});
+  fades.forEach(el => observer.observe(el));
+} else {
+  fades.forEach(el => el.classList.add("show"));
+}
 
-// PRICING SELECT
-document.querySelectorAll(".select-plan").forEach(btn => {
+/* ======================
+   CONTACT FORM
+====================== */
+const form = $("#contactForm");
+const statusText = $(".form-status");
+
+if (form && statusText) {
+  form.addEventListener("submit", e => {
+    e.preventDefault();
+
+    statusText.textContent = "Sending...";
+    statusText.className = "form-status";
+
+    setTimeout(() => {
+      statusText.textContent = "Message sent successfully 🎉";
+      statusText.classList.add("success");
+      form.reset();
+    }, 1200);
+  });
+}
+
+/* ======================
+   PRICING SELECT
+====================== */
+$$(".select-plan").forEach(btn => {
   btn.addEventListener("click", () => {
-    document.querySelectorAll(".pricing .card").forEach(c => c.classList.remove("selected"));
-    btn.closest(".card").classList.add("selected");
-    alert(`You selected: ${btn.dataset.plan}`);
+    $$(".pricing .card").forEach(card =>
+      card.classList.remove("selected")
+    );
+
+    const card = btn.closest(".card");
+    card?.classList.add("selected");
+
+    console.log(`Selected plan: ${btn.dataset.plan}`);
   });
 });
